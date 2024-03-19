@@ -5,7 +5,7 @@ export const stripe = new Stripe(config.stripe.secretKey, {
   apiVersion: "2023-10-16",
 });
 
-export const generateCheckout = async (userId: string) => {
+export const createCheckoutSession = async (userId: string) => {
   try {
     const sessions = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -22,11 +22,15 @@ export const generateCheckout = async (userId: string) => {
     });
 
     return {
-      url: sessions.url
-    }
+      url: sessions.url,
+    };
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
-export const handleProcessWebhookCheckout = () => {};
-export const handleProcessWebhookUpdatedSubscription = () => {};
+export const handleProcessWebhookCheckout = (event: {
+  object: Stripe.Checkout.Session;
+}) => {};
+export const handleProcessWebhookUpdatedSubscription = (event: {
+  object: Stripe.Subscription;
+}) => {};
