@@ -17,8 +17,12 @@ model User {
   id    String @id @default(uuid())
   name  String
   email String @unique
-  todos      Todo[]
-  
+
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+
+  todos Todo[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
